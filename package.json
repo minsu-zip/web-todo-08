@@ -24,6 +24,7 @@
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "nodemon": "^2.0.19",
-    "style-loader": "^3.3.1"
+    "style-loader": "^3.3.1",
+    "webpack-dev-middleware": "^5.3.3"
   }
 }
