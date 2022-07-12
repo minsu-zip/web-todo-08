@@ -22,7 +22,7 @@ export default function Header({ $target }) {
     const $hamburgerBtn = e.target.closest('button')
     if ($hamburgerBtn) {
       const $sidebar = document.querySelector('aside')
-      $sidebar.style.right = '0%'
+      $sidebar.classList.toggle('is-open', true)
     }
   })
 

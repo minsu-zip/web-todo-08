@@ -18,6 +18,34 @@ export default function ({ $target }) {
           'HTML/CSS공부하기를 해야할 일에서 하고 있는 일로 이동하였습니다.',
         timestamp: '1분전',
       },
+      {
+        title:
+          'HTML/CSS공부하기를 해야할 일에서 하고 있는 일로 이동하였습니다.',
+        timestamp: '1분전',
+      },
+      {
+        title: '해야할 일에 HTML/CSS 공부하기를 등록하였습니다.',
+        timestamp: '5분전',
+      },
+      {
+        title:
+          'HTML/CSS공부하기를 해야할 일에서 하고 있는 일로 이동하였습니다.',
+        timestamp: '1분전',
+      },
+      {
+        title:
+          'HTML/CSS공부하기를 해야할 일에서 하고 있는 일로 이동하였습니다.',
+        timestamp: '1분전',
+      },
+      {
+        title: '해야할 일에 HTML/CSS 공부하기를 등록하였습니다.',
+        timestamp: '5분전',
+      },
+      {
+        title:
+          'HTML/CSS공부하기를 해야할 일에서 하고 있는 일로 이동하였습니다.',
+        timestamp: '1분전',
+      },
     ],
   }
   const $sidebar = document.createElement('aside')
@@ -35,10 +63,10 @@ export default function ({ $target }) {
             ${this.state.actions
               .map(
                 ({ title, timestamp }) => `
-                <div class='history-card-wrapper'>
-                    <div class='history-card-author'>@partro</div>
-                    <div class='history-card-text'>${title}</div>
-                    <div class='history-card-createdAt'>${timestamp}</div>
+                <div class='history-card-wrapper'>  
+                  <div class='history-card-author'>@partro</div>
+                  <div class='history-card-text'>${title}</div>
+                  <div class='history-card-createdAt'>${timestamp}</div>
                 </div>
                 `
               )
@@ -51,7 +79,7 @@ export default function ({ $target }) {
   $sidebar.addEventListener('click', (e) => {
     const $closeBtn = e.target.closest('button')
     if ($closeBtn) {
-      $sidebar.style.right = '-30%'
+      $sidebar.classList.toggle('is-open', false)
     }
   })
 }
