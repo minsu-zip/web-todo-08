@@ -30,6 +30,9 @@ module.exports = {
           {
             loader: 'file-loader',
           },
+        ],
+      },
     ],
   },
+  devtool: 'eval-cheap-source-map',
 }
