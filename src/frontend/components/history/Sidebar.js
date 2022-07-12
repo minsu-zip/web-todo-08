@@ -47,4 +47,11 @@ export default function ({ $target }) {
     `
   }
   this.render()
+
+  $sidebar.addEventListener('click', (e) => {
+    const $closeBtn = e.target.closest('button')
+    if ($closeBtn) {
+      $sidebar.style.right = '-30%'
+    }
+  })
 }
