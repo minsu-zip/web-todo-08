@@ -6,9 +6,8 @@ block content
       h1 TO-DO List
       img(src='/images/hamburger.svg')
 
-    main
-      section
-        .todo-column
+    main.todo-container
+        section.todo-column
           .todo-column-header
             .todo-column-title 해야할 일
             .todo-column-count 2
