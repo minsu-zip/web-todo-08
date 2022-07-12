@@ -1,7 +1,10 @@
 import '../styles/reset.css'
 import '../styles/global.css'
+import '../styles/index.css'
 
-export default function App($app) {
+import Header from './Header.js'
+
+export default function App($target) {
   this.state = {
     todos: [
       {
@@ -40,6 +43,8 @@ export default function App($app) {
   this.setState = (nextState) => {
     this.state = nextState
   }
+
+  const header = new Header({ $target })
 
   const init = async () => {
     //
