@@ -1,11 +1,15 @@
 const path = require('path')
 
+const mode = process.env.NODE_ENV || 'development'
+
 module.exports = {
-  mode: 'development',
-  entry: './public/javascripts/index.js',
+  mode,
+  entry: {
+    main: './src/frontend',
+  },
   output: {
-    path: path.resolve(__dirname, './public/dist'),
-    filename: 'bundle.js',
+    filename: '[name].js',
+    path: path.resolve('./public/dist'),
   },
   module: {
     rules: [

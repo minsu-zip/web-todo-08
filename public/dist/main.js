@@ -1,0 +1,1 @@
+(()=>{"use strict";class t{constructor({targetEl:t}){this.targetEl=t,this.dataList=""}init(t){return this.dataList=t.flat(2).join(""),this.render(this.dataList)}render(t){return`<span>${t}</span>`}}window.addEventListener("DOMContentLoaded",(()=>{const e=document.querySelector("#log"),n=new t({targetEl:e}).init([1,2,3,4,[5,6,[7]]]);e.innerHTML+=`datalist is ${n}`}))})();
