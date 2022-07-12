@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  .container
+    header
+      h1 TO-DO List
+      button.sidebar-openBtn
+        img(src='/images/hamburger.svg')
+
+    main.todo-container
+        section.todo-column
+          .todo-column-header
+            .todo-column-title 해야할 일
+            .todo-column-count 2
+            img.todo-column-addBtn(src='/images/plus.svg' alt='추가-버튼')
+            img.todo-column-removeBtn(src='/images/close.svg' alt='삭제-버튼')
+          
+          .todo-card-container
+            .todo-card-wrapper
+              .todo-card-content
+                .todo-card-title git 공부
+                .todo-card-description add, commit
+                .todo-card-author author by minsu
+              img.todo-card-removeBtn(src='/images/close.svg' alt='삭제-버튼')
+
+    aside
+      img.history-closeBtn(src='/images/close.svg' alt='삭제-버튼')
+      .history-card-container
+        .history-card-wrapper
+          .history-card-author @partro
+          .history-card-text HTML/CSS 공부하기를 해야할 일에서 하고 있는 일로 이동함
+          .history-card-createdAt 1분전
+      
+      
