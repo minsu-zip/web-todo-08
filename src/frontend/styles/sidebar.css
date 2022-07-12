@@ -1,0 +1,62 @@
+aside {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -30%;
+  width: 30%;
+  background-color: white;
+  transition: all 0.5s ease;
+}
+
+.history-closeBtn {
+  cursor: pointer;
+  float: right;
+  background-color: transparent;
+  border: 0;
+  margin-top: 2rem;
+  margin-right: 2rem;
+  margin: 2rem 2rem 0 0;
+}
+
+.history-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.6rem;
+  gap: 1.6rem;
+  width: 32rem;
+  height: 13rem;
+}
+
+.history-card-auth {
+  width: 24rem;
+  height: 2rem;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+
+.history-card-text {
+  width: 24rem;
+  height: 4.6rem;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+
+.history-card-createdAt {
+  width: 24rem;
+  height: 2rem;
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: var(--color-gray500);
+}
