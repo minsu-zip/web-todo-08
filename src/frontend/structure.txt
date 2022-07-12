@@ -4,7 +4,8 @@ block content
   .container
     header
       h1 TO-DO List
-      img(src='/images/hamburger.svg')
+      button.sidebar-openBtn
+        img(src='/images/hamburger.svg')
 
     main.todo-container
         section.todo-column
