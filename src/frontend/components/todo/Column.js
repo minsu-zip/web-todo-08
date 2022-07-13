@@ -10,30 +10,33 @@ export default function TodoColumn({ $target, initialState, addTodo }) {
 
   this.setState = (nextState) => {
     this.state = nextState
+    const { status, title, todos } = this.state
     columnHeader.setState({
-      status: this.state.status,
-      title: this.state.title,
-      todoCnt: this.state.todos.length,
+      status,
+      title,
+      todoCnt: todos.length,
     })
     todoCardContainer.setState({
-      status: this.state.status,
-      todos: this.state.todos,
+      status,
+      todos,
     })
   }
+
+  const { status, title, todos } = this.state
 
   const columnHeader = new TodoColumnHeader({
     $target: this.$element,
     initialState: {
-      status: this.state.status,
-      title: this.state.title,
-      todoCnt: this.state.todos.length,
+      status,
+      title,
+      todoCnt: todos.length,
     },
   })
   const todoCardContainer = new TodoCardContainer({
     $target: this.$element,
     initialState: {
-      status: this.state.status,
-      todos: this.state.todos,
+      status,
+      todos,
     },
     addTodo,
   })
