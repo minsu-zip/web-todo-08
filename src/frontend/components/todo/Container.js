@@ -75,23 +75,4 @@ export default function TodoContainer({ $target }) {
   }
 
   this.init()
-
-  this.$element.addEventListener('click', (e) => {
-    const $todoCardRemoveBtn = e.target.closest('.todo-card-removeBtn')
-    if ($todoCardRemoveBtn) {
-      const { todoId } = $todoCardRemoveBtn.dataset
-      this.setState({
-        todos: this.state.todos.filter((todo) => todo.id !== +todoId),
-      })
-      return
-    }
-    const $todoCardAddBtn = e.target.closest('.todo-card-addBtn')
-    if ($todoCardAddBtn) {
-      const { todoId } = $todoCardAddBtn.dataset
-      this.setState({
-        todos: this.state.todos.filter((todo) => todo.id !== +todoId),
-      })
-      return
-    }
-  })
 }
