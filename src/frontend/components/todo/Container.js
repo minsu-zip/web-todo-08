@@ -1,4 +1,5 @@
 import TodoColumn from './Column'
+import ConfirmModal from '../ConfirmModal'
 
 const todoColumnData = [
   { status: 'todo', label: '해야할 일' },
@@ -40,6 +41,11 @@ export default function TodoContainer({ $target }) {
       $target: this.$element,
       initialState: { status, title: label, todos },
     })
+  })
+
+  const confirmModal = new ConfirmModal({
+    $target: this.$element,
+    initialState: {},
   })
 
   this.init = () => {
