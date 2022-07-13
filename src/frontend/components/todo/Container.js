@@ -11,7 +11,6 @@ export default function TodoContainer({ $target }) {
   this.$element.classList.add('todo-container')
   $target.appendChild(this.$element)
 
-  // hover 태크
   this.$hover = document.createElement('div')
   this.$hover.classList.add('hover')
   this.$element.appendChild(this.$hover)
@@ -119,7 +118,6 @@ export default function TodoContainer({ $target }) {
     if (!li) {
       if (ul) {
         const start = ul.querySelector('.start')
-        console.log('start', start)
         const { top } = start.getBoundingClientRect()
         if (top > pageY) {
           start.parentNode.insertBefore(targetLi, start.nextSibling)
@@ -145,7 +143,6 @@ export default function TodoContainer({ $target }) {
 
     clicked = true
     let targetRemove = event.target.closest('.todo-card-wrapper')
-    console.log(targetRemove)
     if (targetRemove === null || targetRemove.className === 'start') {
       return
     }
