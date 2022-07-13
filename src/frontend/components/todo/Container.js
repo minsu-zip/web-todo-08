@@ -19,7 +19,8 @@ export default function TodoContainer({ $target }) {
   this.setState = (nextState) => {
     this.state = nextState
     this.getTodoByStatus().forEach((todos, i) => {
-      todoColumns[i].setState({ title: todoColumnData[i].label, todos })
+      const { status, label } = todoColumnData[i]
+      todoColumns[i].setState({ status, title: label, todos })
     })
   }
 
@@ -35,11 +36,24 @@ export default function TodoContainer({ $target }) {
     )
   }
 
+  this.removeTodo = (id) => {
+    this.setState({
+      todos: this.state.todos.filter((todo) => todo.id !== id),
+    })
+  }
+
+  this.addTodo = (todo) => {
+    this.setState({
+      todos: [todo, ...this.state.todos],
+    })
+  }
+
   const todoColumns = this.getTodoByStatus().map((todos, i) => {
     const { status, label } = todoColumnData[i]
     return new TodoColumn({
       $target: this.$element,
       initialState: { status, title: label, todos },
+      addTodo: this.addTodo,
     })
   })
 
@@ -88,9 +102,7 @@ export default function TodoContainer({ $target }) {
       submitText: '삭제',
       onSubmit: () => {
         // 삭제 요청
-        this.setState({
-          todos: this.state.todos.filter((todo) => todo.id !== id),
-        })
+        this.removeTodo(id)
         confirmModal.close()
       },
     })

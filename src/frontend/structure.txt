@@ -18,6 +18,12 @@ block content
               img(src='/images/close.svg' alt='todo-column-removeBtn')
           
           .todo-card-container
+            form.todo-form
+              input.todo-title-input
+              input.todo-description-input
+              .todo-form-btns
+                button.todo-form-cancelBtn
+                input.todo-form-submitBtn
             .todo-card-wrapper
               .todo-card-content
                 .todo-card-title git 공부

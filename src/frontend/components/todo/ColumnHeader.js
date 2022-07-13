@@ -28,4 +28,14 @@ export default function TodoColumnHeader({ $target, initialState }) {
   }
 
   this.render()
+
+  this.$element.addEventListener('click', (e) => {
+    const $todoCardAddBtn = e.target.closest('.todo-card-addBtn')
+    if ($todoCardAddBtn) {
+      const form = document.querySelector(
+        `form[data-todo-status="${this.state.status}"]`
+      )
+      form.classList.toggle('hidden')
+    }
+  })
 }
