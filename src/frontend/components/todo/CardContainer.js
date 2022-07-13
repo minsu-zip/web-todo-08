@@ -1,4 +1,5 @@
 import TodoCard from './Card.js'
+import TodoCardForm from './CardForm.js'
 
 export default function TodoCardContainer({ $target, initialState, addTodo }) {
   this.$element = document.createElement('div')
@@ -11,6 +12,15 @@ export default function TodoCardContainer({ $target, initialState, addTodo }) {
     this.state = nextState
     this.render()
   }
+
+  new TodoCardForm({
+    $target: this.$element,
+    initialState: {
+      status: this.state.status,
+      submitButtonText: '등록',
+    },
+    addTodo,
+  })
 
   this.render = () => {
     this.$element
