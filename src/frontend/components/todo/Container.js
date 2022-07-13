@@ -69,6 +69,7 @@ export default function TodoContainer({ $target }) {
       $target: this.$element,
       initialState: { status, title: label, todos },
       addTodo: this.addTodo,
+      updateTodo: this.updateTodo,
     })
   })
 
