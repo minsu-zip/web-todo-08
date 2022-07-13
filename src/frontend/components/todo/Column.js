@@ -11,10 +11,14 @@ export default function TodoColumn({ $target, initialState, addTodo }) {
   this.setState = (nextState) => {
     this.state = nextState
     columnHeader.setState({
+      status: this.state.status,
       title: this.state.title,
       todoCnt: this.state.todos.length,
     })
-    todoCardContainer.setState({ todos: this.state.todos })
+    todoCardContainer.setState({
+      status: this.state.status,
+      todos: this.state.todos,
+    })
   }
 
   const columnHeader = new TodoColumnHeader({
@@ -28,6 +32,7 @@ export default function TodoColumn({ $target, initialState, addTodo }) {
   const todoCardContainer = new TodoCardContainer({
     $target: this.$element,
     initialState: {
+      status: this.state.status,
       todos: this.state.todos,
     },
     addTodo,
