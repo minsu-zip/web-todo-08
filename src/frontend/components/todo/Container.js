@@ -19,7 +19,8 @@ export default function TodoContainer({ $target }) {
   this.setState = (nextState) => {
     this.state = nextState
     this.getTodoByStatus().forEach((todos, i) => {
-      todoColumns[i].setState({ title: todoColumnData[i].label, todos })
+      const { status, label } = todoColumnData[i]
+      todoColumns[i].setState({ status, title: label, todos })
     })
   }
 
