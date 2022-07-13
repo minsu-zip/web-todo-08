@@ -14,11 +14,12 @@ export default function TodoColumnHeader({ $target, initialState }) {
   }
 
   this.render = () => {
+    const { title, todoCnt, status } = this.state
     this.$element.innerHTML = `
-        <p class="todo-column-title">${this.state.title}</p>
-        <p class="todo-column-count">${this.state.todoCnt}</p>
+        <p class="todo-column-title">${title}</p>
+        <p class="todo-column-count">${todoCnt}</p>
         <button class="todo-card-addBtn">
-            <img src="${plusIcon}" alt="todo-card-addBtn" data-todo-status="${this.state.status}"/>
+            <img src="${plusIcon}" alt="todo-card-addBtn" data-todo-status="${status}"/>
         </button>
         <button class="todo-column-removeBtn">
             <img src="${closeIcon}" alt="todo-card-removeBtn"/>
