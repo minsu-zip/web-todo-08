@@ -113,12 +113,14 @@ input::placeholder {
 }
 
 .todo-title-input {
+  width: 100%;
   font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 0.8rem;
 }
 
 .todo-description-input {
+  width: 100%;
   font-size: 1.4rem;
   margin-bottom: 1.6rem;
 }
