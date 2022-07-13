@@ -4,9 +4,11 @@ import '../styles/index.css'
 import '../styles/todo.css'
 
 import Header from './Header.js'
+import HistorySidebar from './history/Sidebar.js'
 import TodoContainer from './todo/Container'
 
 export default function App($target) {
   new Header({ $target })
+  new HistorySidebar({ $target })
   new TodoContainer({ $target })
 }

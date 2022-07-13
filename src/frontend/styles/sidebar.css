@@ -1,0 +1,56 @@
+aside {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 48rem;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  transform: translateX(100%);
+  transition: all 0.5s ease;
+  overflow-y: auto;
+}
+
+aside.is-open {
+  transform: translateX(0);
+}
+
+.sidebar-closeBtn {
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  margin: 4rem 8rem 0 auto;
+}
+
+.history-card-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 8rem 0 6rem;
+}
+
+.history-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.6rem;
+  border-bottom: 1px solid var(--color-gray500);
+}
+
+.history-card-author {
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+
+.history-card-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.history-card-createdAt {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: var(--color-gray500);
+}
