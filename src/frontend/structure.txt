@@ -10,10 +10,12 @@ block content
     main.todo-container
         section.todo-column
           .todo-column-header
-            .todo-column-title 해야할 일
-            .todo-column-count 2
-            img.todo-column-addBtn(src='/images/plus.svg' alt='추가-버튼')
-            img.todo-column-removeBtn(src='/images/close.svg' alt='삭제-버튼')
+            p.todo-column-title 해야할 일
+            p.todo-column-count 2
+            button.todo-card-addBtn
+              img(src='/images/plus.svg' alt='todo-card-addBtn')
+            button.todo-column-removeBtn
+              img(src='/images/close.svg' alt='todo-column-removeBtn')
           
           .todo-card-container
             .todo-card-wrapper
@@ -21,7 +23,8 @@ block content
                 .todo-card-title git 공부
                 .todo-card-description add, commit
                 .todo-card-author author by minsu
-              img.todo-card-removeBtn(src='/images/close.svg' alt='삭제-버튼')
+              button.todo-card-removeBtn
+                img(src='/images/close.svg' alt='todo-card-removeBtn')
 
     aside
       img.history-closeBtn(src='/images/close.svg' alt='삭제-버튼')
