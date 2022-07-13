@@ -1,4 +1,5 @@
 import TodoColumn from './Column'
+import ConfirmModal from '../ConfirmModal'
 
 const todoColumnData = [
   { status: 'todo', label: '해야할 일' },
@@ -22,7 +23,8 @@ export default function TodoContainer({ $target }) {
   this.setState = (nextState) => {
     this.state = nextState
     this.getTodoByStatus().forEach((todos, i) => {
-      todoColumns[i].setState({ title: todoColumnData[i].label, todos })
+      const { status, label } = todoColumnData[i]
+      todoColumns[i].setState({ status, title: label, todos })
     })
   }
 
@@ -38,12 +40,30 @@ export default function TodoContainer({ $target }) {
     )
   }
 
+  this.removeTodo = (id) => {
+    this.setState({
+      todos: this.state.todos.filter((todo) => todo.id !== id),
+    })
+  }
+
+  this.addTodo = (todo) => {
+    this.setState({
+      todos: [todo, ...this.state.todos],
+    })
+  }
+
   const todoColumns = this.getTodoByStatus().map((todos, i) => {
     const { status, label } = todoColumnData[i]
     return new TodoColumn({
       $target: this.$element,
       initialState: { status, title: label, todos },
+      addTodo: this.addTodo,
     })
+  })
+
+  const confirmModal = new ConfirmModal({
+    $target: this.$element,
+    initialState: {},
   })
 
   this.init = () => {
@@ -79,7 +99,29 @@ export default function TodoContainer({ $target }) {
   }
 
   this.init()
+  
+  this.openRemoveConfirmModal = (id) => {
+    confirmModal.setState({
+      message: '선택한 카드를 삭제할까요?',
+      submitText: '삭제',
+      onSubmit: () => {
+        // 삭제 요청
+        this.removeTodo(id)
+        confirmModal.close()
+      },
+    })
+    confirmModal.open()
+  }
 
+  this.$element.addEventListener('click', (e) => {
+    const $todoCardRemoveBtn = e.target.closest('.todo-card-removeBtn')
+    if ($todoCardRemoveBtn) {
+      const { todoId } = $todoCardRemoveBtn.dataset
+      this.openRemoveConfirmModal(+todoId)
+      return
+    }
+  })
+  
   const hover = this.$hover
 
   // element2이 element1보다 앞에 있는지 검사

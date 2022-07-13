@@ -1,8 +1,8 @@
 :root {
-  --color-theme: #28c1bc;
   --color-gray100: #f5f5f7;
+  --color-gray200: #e0e0e0;
   --color-gray500: #bdbdbd;
-  --color-gray300: #828282;
+  --color-gray700: #828282;
   --color-gray900: #010101;
   --color-white: #fff;
   --color-green: #52b201;

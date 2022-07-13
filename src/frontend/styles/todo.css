@@ -91,3 +91,59 @@
 .todo-card-author {
   color: var(--color-gray500);
 }
+
+.todo-form {
+  border: 1px solid var(--color-blue);
+  padding: 1.6rem;
+  margin-bottom: 1.6rem;
+  border-radius: 0.6rem;
+  background-color: white;
+}
+
+.todo-form.hidden {
+  display: none;
+}
+
+input {
+  border: none;
+}
+
+input::placeholder {
+  color: var(--color-gray700);
+}
+
+.todo-form-btns {
+  display: flex;
+  margin: 0 -0.4rem;
+}
+
+.todo-form-cancelBtn,
+.todo-form-submitBtn {
+  flex: 1;
+  margin: 0 0.4rem;
+  padding: 1rem;
+  font-size: 1.4rem;
+  border-radius: 0.6rem;
+}
+
+.todo-form-cancelBtn,
+.todo-form-submitBtn:disabled {
+  background-color: var(--color-gray200);
+  color: var(--color-gray700);
+}
+
+.todo-form-submitBtn {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+.todo-title-input {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.todo-description-input {
+  font-size: 1.4rem;
+  margin-bottom: 1.6rem;
+}
