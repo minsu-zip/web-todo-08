@@ -50,7 +50,7 @@
 }
 
 /* 드래그 이벤트 css*/
-.hover {
+.drag-point {
   position: absolute;
   padding: 0;
   margin: 0;
@@ -61,7 +61,7 @@
   opacity: 0.5;
 }
 
-.start {
+.startLine {
   height: 0;
   border-radius: 0;
   padding: 0;

@@ -12,9 +12,9 @@ export default function TodoContainer({ $target }) {
   this.$element.classList.add('todo-container')
   $target.appendChild(this.$element)
 
-  this.$hover = document.createElement('div')
-  this.$hover.classList.add('hover')
-  this.$element.appendChild(this.$hover)
+  this.$dragPoint = document.createElement('div')
+  this.$dragPoint.classList.add('drag-point')
+  this.$element.appendChild(this.$dragPoint)
 
   this.state = {
     todos: [],
@@ -99,7 +99,7 @@ export default function TodoContainer({ $target }) {
   }
 
   this.init()
-  
+
   this.openRemoveConfirmModal = (id) => {
     confirmModal.setState({
       message: '선택한 카드를 삭제할까요?',
@@ -121,45 +121,43 @@ export default function TodoContainer({ $target }) {
       return
     }
   })
-  
-  const hover = this.$hover
+
+  const dragPoint = this.$dragPoint
 
   // element2이 element1보다 앞에 있는지 검사
-  function isBefore(element1, element2) {
-    if (element2.parentNode === element1.parentNode) {
-      let cur = element1.previousSibling // 동일한 트리 수준에서 이전 노드를 반환한다.
-      if (cur === element2) return true
-    }
-    return false
+  const isBefore = (element1, element2) => {
+    if (element1.parentNode !== element2.parentNode) return false
+
+    return element1.previousSibling === element2
   }
 
   let clicked = false
-  let hoverLi = undefined
+  let dragPointLi = undefined
   let targetLi = undefined
 
-  function mousemove(event) {
-    if (!clicked || !hoverLi) return
+  const mousemove = (event) => {
+    if (!clicked || !dragPointLi) return
 
     // pageX, pageY 는 모든 페이지 기반
     // clientX, clientY 는 현제 보이는 화면 기반
     const { pageX, pageY } = event
 
-    // 잠시 현재 hover element를 가리고 현재 좌표의 element를 가져온다
-    hover.hidden = true
+    // 잠시 현재 dragPoint element를 가리고 현재 좌표의 element를 가져온다
+    dragPoint.hidden = true
     const elemBelow = document.elementFromPoint(pageX, pageY)
     const li = elemBelow.closest('.todo-card-wrapper')
     const ul = elemBelow.closest('.todo-card-container')
-    hover.hidden = false
+    dragPoint.hidden = false
 
-    hover.style.left = pageX - hover.offsetWidth / 2 + 'px'
-    hover.style.top = pageY - hover.offsetHeight / 2 + 'px'
+    dragPoint.style.left = pageX - dragPoint.offsetWidth / 2 + 'px'
+    dragPoint.style.top = pageY - dragPoint.offsetHeight / 2 + 'px'
 
     if (!li) {
       if (ul) {
-        const start = ul.querySelector('.start')
-        const { top } = start.getBoundingClientRect()
+        const startLine = ul.querySelector('.startLine')
+        const { top } = startLine.getBoundingClientRect()
         if (top > pageY) {
-          start.parentNode.insertBefore(targetLi, start.nextSibling)
+          startLine.parentNode.insertBefore(targetLi, startLine.nextSibling)
         } else {
           ul.appendChild(targetLi)
         }
@@ -170,7 +168,7 @@ export default function TodoContainer({ $target }) {
 
     // 만약 같은 ul에서 taeget이 가까운 li보다 앞에 있다면
     // target을 li 위로 옮겨줍니다.
-    if (isBefore(targetLi, li) && li.className !== 'start') {
+    if (isBefore(targetLi, li) && li.className !== 'startLine') {
       li.parentNode.insertBefore(targetLi, li)
     }
     // 그 외에는 밑으로 이동.
@@ -179,33 +177,33 @@ export default function TodoContainer({ $target }) {
     }
   }
 
-  function mousedown(event) {
+  const mousedown = (event) => {
     if (event.button !== 0) {
       return
     }
 
     clicked = true
     let targetRemove = event.target.closest('.todo-card-wrapper')
-    if (targetRemove === null || targetRemove.className === 'start') {
+    if (targetRemove === null || targetRemove.className === 'startLine') {
       return
     }
 
     // 현재 삭제하려고하는 taeget li태그입니다.
     targetLi = targetRemove
-    // 내부 값을 복사한 element를 마우스를 따라다닐 hover로 설정합니다.
-    hoverLi = targetRemove.cloneNode(true)
+    // 내부 값을 복사한 element를 마우스를 따라다닐 dragPoint로 설정합니다.
+    dragPointLi = targetRemove.cloneNode(true)
     // target을 불투명하게 하기 위해 class를 넣어주세요
     targetLi.classList.add('temp')
 
     const { pageX, pageY } = event
 
-    hover.appendChild(hoverLi)
+    dragPoint.appendChild(dragPointLi)
 
-    hover.style.left = pageX - hover.offsetWidth / 2 + 'px'
-    hover.style.top = pageY - hover.offsetHeight / 2 + 'px'
+    dragPoint.style.left = pageX - dragPoint.offsetWidth / 2 + 'px'
+    dragPoint.style.top = pageY - dragPoint.offsetHeight / 2 + 'px'
   }
 
-  function mouseup() {
+  const mouseup = () => {
     if (!clicked) {
       return
     }
@@ -214,14 +212,14 @@ export default function TodoContainer({ $target }) {
     if (targetLi) {
       targetLi.classList.remove('temp')
     }
-    if (hoverLi) {
-      hoverLi.remove()
+    if (dragPointLi) {
+      dragPointLi.remove()
     }
-    hoverLi = undefined
+    dragPointLi = undefined
     targetLi = undefined
   }
 
-  function mouseleave() {
+  const mouseleave = () => {
     if (!clicked) {
       return
     }
