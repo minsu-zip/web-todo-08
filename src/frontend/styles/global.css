@@ -24,6 +24,13 @@ p {
   line-height: 1.5;
   color: var(--color-gray900);
 }
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 @media (max-width: 319px) {
   /* smartphones, iPhone, portrait 480x320 phones */
   html {
