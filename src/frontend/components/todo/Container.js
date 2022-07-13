@@ -96,4 +96,13 @@ export default function TodoContainer({ $target }) {
     })
     confirmModal.open()
   }
+
+  this.$element.addEventListener('click', (e) => {
+    const $todoCardRemoveBtn = e.target.closest('.todo-card-removeBtn')
+    if ($todoCardRemoveBtn) {
+      const { todoId } = $todoCardRemoveBtn.dataset
+      this.openRemoveConfirmModal(+todoId)
+      return
+    }
+  })
 }
