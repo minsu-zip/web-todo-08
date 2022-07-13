@@ -53,6 +53,7 @@ export default function TodoContainer({ $target }) {
     return new TodoColumn({
       $target: this.$element,
       initialState: { status, title: label, todos },
+      addTodo: this.addTodo,
     })
   })
 

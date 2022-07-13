@@ -1,6 +1,6 @@
 import TodoCard from './Card.js'
 
-export default function TodoCardContainer({ $target, initialState }) {
+export default function TodoCardContainer({ $target, initialState, addTodo }) {
   this.$element = document.createElement('div')
   this.$element.classList.add('todo-card-container')
   $target.appendChild(this.$element)

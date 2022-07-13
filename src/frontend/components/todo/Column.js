@@ -1,7 +1,7 @@
 import TodoColumnHeader from './ColumnHeader.js'
 import TodoCardContainer from './CardContainer.js'
 
-export default function TodoColumn({ $target, initialState }) {
+export default function TodoColumn({ $target, initialState, addTodo }) {
   this.$element = document.createElement('section')
   this.$element.classList.add('todo-column')
   $target.appendChild(this.$element)
@@ -30,5 +30,6 @@ export default function TodoColumn({ $target, initialState }) {
     initialState: {
       todos: this.state.todos,
     },
+    addTodo,
   })
 }
