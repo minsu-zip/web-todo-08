@@ -1,4 +1,5 @@
 import TodoColumn from './Column'
+import ConfirmModal from '../ConfirmModal'
 
 const todoColumnData = [
   { status: 'todo', label: '해야할 일' },
@@ -42,6 +43,11 @@ export default function TodoContainer({ $target }) {
     })
   })
 
+  const confirmModal = new ConfirmModal({
+    $target: this.$element,
+    initialState: {},
+  })
+
   this.init = () => {
     // data fetch
     this.setState({
@@ -75,4 +81,28 @@ export default function TodoContainer({ $target }) {
   }
 
   this.init()
+
+  this.openRemoveConfirmModal = (id) => {
+    confirmModal.setState({
+      message: '선택한 카드를 삭제할까요?',
+      submitText: '삭제',
+      onSubmit: () => {
+        // 삭제 요청
+        this.setState({
+          todos: this.state.todos.filter((todo) => todo.id !== id),
+        })
+        confirmModal.close()
+      },
+    })
+    confirmModal.open()
+  }
+
+  this.$element.addEventListener('click', (e) => {
+    const $todoCardRemoveBtn = e.target.closest('.todo-card-removeBtn')
+    if ($todoCardRemoveBtn) {
+      const { todoId } = $todoCardRemoveBtn.dataset
+      this.openRemoveConfirmModal(+todoId)
+      return
+    }
+  })
 }

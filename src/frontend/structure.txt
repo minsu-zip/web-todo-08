@@ -25,6 +25,13 @@ block content
                 .todo-card-author author by minsu
               button.todo-card-removeBtn
                 img(src='/images/close.svg' alt='todo-card-removeBtn')
+        div.confirm-modal-overlay
+          div.confirm-modal
+            p.confirm-message
+            div.confirm-action-btns
+              button.confirm-cancelBtn
+              button.confirm-submitBtn
+
 
     aside
       button.history-closeBtn
