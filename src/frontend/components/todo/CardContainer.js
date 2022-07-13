@@ -6,6 +6,10 @@ export default function TodoCardContainer({ $target, initialState, addTodo }) {
   this.$element.classList.add('todo-card-container')
   $target.appendChild(this.$element)
 
+  this.$startLine = document.createElement('div')
+  this.$startLine.classList.add('startLine')
+  this.$element.appendChild(this.$startLine)
+
   this.state = initialState
 
   this.setState = (nextState) => {

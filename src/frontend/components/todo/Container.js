@@ -12,6 +12,10 @@ export default function TodoContainer({ $target }) {
   this.$element.classList.add('todo-container')
   $target.appendChild(this.$element)
 
+  this.$dragPoint = document.createElement('div')
+  this.$dragPoint.classList.add('drag-point')
+  this.$element.appendChild(this.$dragPoint)
+
   this.state = {
     todos: [],
   }
@@ -117,4 +121,111 @@ export default function TodoContainer({ $target }) {
       return
     }
   })
+
+  const dragPoint = this.$dragPoint
+
+  // element2이 element1보다 앞에 있는지 검사
+  const isBefore = (element1, element2) => {
+    if (element1.parentNode !== element2.parentNode) return false
+
+    return element1.previousSibling === element2
+  }
+
+  let clicked = false
+  let dragPointLi = undefined
+  let targetLi = undefined
+
+  const handleMouseMove = (event) => {
+    if (!clicked || !dragPointLi) return
+
+    // pageX, pageY 는 모든 페이지 기반
+    // clientX, clientY 는 현제 보이는 화면 기반
+    const { pageX, pageY } = event
+
+    // 잠시 현재 dragPoint element를 가리고 현재 좌표의 element를 가져온다
+    dragPoint.hidden = true
+    const elemBelow = document.elementFromPoint(pageX, pageY)
+    const $todoCard = elemBelow.closest('.todo-card-wrapper')
+    const $todoCardContainer = elemBelow.closest('.todo-card-container')
+    dragPoint.hidden = false
+
+    dragPoint.style.left = pageX - dragPoint.offsetWidth / 2 + 'px'
+    dragPoint.style.top = pageY - dragPoint.offsetHeight / 2 + 'px'
+
+    if (!$todoCard) {
+      if ($todoCardContainer) {
+        const startLine = $todoCardContainer.querySelector('.startLine')
+        const { top } = startLine.getBoundingClientRect()
+        if (top > pageY) {
+          startLine.parentNode.insertBefore(targetLi, startLine.nextSibling)
+        } else {
+          $todoCardContainer.appendChild(targetLi)
+        }
+      }
+
+      return
+    }
+
+    // 만약 같은 $todoCardContainer에서 taeget이 가까운 todoCard보다 앞에 있다면
+    // target을 todoCard 위로 옮겨줍니다.
+    if (isBefore(targetLi, $todoCard) && $todoCard.className !== 'startLine') {
+      $todoCard.parentNode.insertBefore(targetLi, $todoCard)
+    }
+    // 그 외에는 밑으로 이동.
+    $todoCard.parentNode?.insertBefore(targetLi, $todoCard.nextSibling)
+  }
+
+  const handleMouseDown = (event) => {
+    if (event.button !== 0) {
+      return
+    }
+
+    clicked = true
+    const targetRemove = event.target.closest('.todo-card-wrapper')
+    if (targetRemove === null || targetRemove.className === 'startLine') {
+      return
+    }
+
+    // 현재 삭제하려고하는 taeget li태그입니다.
+    targetLi = targetRemove
+    // 내부 값을 복사한 element를 마우스를 따라다닐 dragPoint로 설정합니다.
+    dragPointLi = targetRemove.cloneNode(true)
+    // target을 불투명하게 하기 위해 class를 넣어주세요
+    targetLi.classList.add('temp')
+
+    const { pageX, pageY } = event
+
+    dragPoint.appendChild(dragPointLi)
+
+    dragPoint.style.left = pageX - dragPoint.offsetWidth / 2 + 'px'
+    dragPoint.style.top = pageY - dragPoint.offsetHeight / 2 + 'px'
+  }
+
+  const handleMouseUp = () => {
+    if (!clicked) {
+      return
+    }
+
+    clicked = false
+    if (targetLi) {
+      targetLi.classList.remove('temp')
+    }
+    if (dragPointLi) {
+      dragPointLi.remove()
+    }
+    dragPointLi = undefined
+    targetLi = undefined
+  }
+
+  const handleMouseLeave = () => {
+    if (!clicked) {
+      return
+    }
+    handleMouseUp()
+  }
+
+  this.$element.addEventListener('mousemove', handleMouseMove)
+  this.$element.addEventListener('mousedown', handleMouseDown)
+  this.$element.addEventListener('mouseup', handleMouseUp)
+  this.$element.addEventListener('mouseleave', handleMouseLeave)
 }

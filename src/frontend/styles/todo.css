@@ -31,6 +31,10 @@
   line-height: 1;
 }
 
+.todo-card-container {
+  min-height: 100vh;
+}
+
 .todo-card-addBtn {
   margin-right: 0.8rem;
 }
@@ -42,7 +46,28 @@
   background-color: var(--color-white);
   padding: 1.6rem;
   border-radius: 0.6rem;
+  user-select: none;
 }
+
+/* 드래그 이벤트 css*/
+.drag-point {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  transform: rotate(-5deg);
+}
+
+.temp {
+  opacity: 0.5;
+}
+
+.startLine {
+  height: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+}
+/* */
 
 .todo-card-removeBtn {
   height: fit-content;
