@@ -13,7 +13,11 @@ export default function TodoCard({ $target, initialState }) {
   }
 
   this.render = () => {
-    const { title, description, id } = this.state.todo
+    const {
+      index,
+      todo: { status, title, description, id },
+    } = this.state
+    this.$element.dataset.name = `${status}-${index}`
     this.$element.innerHTML = `
         <div class="todo-card-content">
             <p class="todo-card-title">${title}</p>
