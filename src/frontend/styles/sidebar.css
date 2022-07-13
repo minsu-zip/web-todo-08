@@ -1,5 +1,4 @@
 aside {
-  /* height: 100vh; */
   position: fixed;
   top: 0;
   bottom: 0;
@@ -17,7 +16,7 @@ aside.is-open {
   transform: translateX(0);
 }
 
-.history-closeBtn {
+.sidebar-closeBtn {
   cursor: pointer;
   background-color: transparent;
   border: 0;
@@ -35,8 +34,7 @@ aside.is-open {
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  padding: 2rem 0;
-  background-color: #f0faea;
+  padding: 1.6rem;
   border-bottom: 1px solid var(--color-gray500);
 }
 
