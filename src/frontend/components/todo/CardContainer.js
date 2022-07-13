@@ -18,13 +18,28 @@ export default function TodoCardContainer({
     this.render()
   }
 
+  this.submitTodoCreateForm = (todo) => {
+    //  post 요청하고 서버에서 데이터 받기
+    addTodo(todo)
+  }
+
+  this.submitTodoEditForm = (todo) => {
+    //  patch 요청하고 서버에서 데이터 받기
+    updateTodo(todo)
+  }
+
   new TodoCardForm({
     $target: this.$element,
     initialState: {
+      index: 0,
+      todo: {
       status: this.state.status,
+        title: '',
+        description: '',
+      },
       submitButtonText: '등록',
     },
-    addTodo,
+    submitForm: this.submitTodoCreateForm,
   })
 
   this.render = () => {
