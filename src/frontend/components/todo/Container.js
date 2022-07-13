@@ -82,15 +82,12 @@ export default function TodoContainer({ $target }) {
 
   const hover = this.$hover
 
+  // element2이 element1보다 앞에 있는지 검사
   function isBefore(element1, element2) {
     if (element2.parentNode === element1.parentNode) {
-      for (let cur = element1.previousSibling; cur; cur = cur.previousSibling) {
-        if (cur === element2) {
-          return true
-        }
-      }
+      let cur = element1.previousSibling // 동일한 트리 수준에서 이전 노드를 반환한다.
+      if (cur === element2) return true
     }
-
     return false
   }
 
@@ -129,9 +126,13 @@ export default function TodoContainer({ $target }) {
       return
     }
 
+    // 만약 같은 ul에서 taeget이 가까운 li보다 앞에 있다면
+    // target을 li 위로 옮겨줍니다.
     if (isBefore(targetLi, li) && li.className !== 'start') {
       li.parentNode.insertBefore(targetLi, li)
-    } else if (li.parentNode) {
+    }
+    // 그 외에는 밑으로 이동.
+    else if (li.parentNode) {
       li.parentNode.insertBefore(targetLi, li.nextSibling)
     }
   }
@@ -147,8 +148,11 @@ export default function TodoContainer({ $target }) {
       return
     }
 
+    // 현재 삭제하려고하는 taeget li태그입니다.
     targetLi = targetRemove
+    // 내부 값을 복사한 element를 마우스를 따라다닐 hover로 설정합니다.
     hoverLi = targetRemove.cloneNode(true)
+    // target을 불투명하게 하기 위해 class를 넣어주세요
     targetLi.classList.add('temp')
 
     const { pageX, pageY } = event
