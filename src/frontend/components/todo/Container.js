@@ -81,4 +81,19 @@ export default function TodoContainer({ $target }) {
   }
 
   this.init()
+
+  this.openRemoveConfirmModal = (id) => {
+    confirmModal.setState({
+      message: '선택한 카드를 삭제할까요?',
+      submitText: '삭제',
+      onSubmit: () => {
+        // 삭제 요청
+        this.setState({
+          todos: this.state.todos.filter((todo) => todo.id !== id),
+        })
+        confirmModal.close()
+      },
+    })
+    confirmModal.open()
+  }
 }
