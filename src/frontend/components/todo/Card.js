@@ -31,4 +31,12 @@ export default function TodoCard({ $target, initialState }) {
   }
 
   this.render()
+
+  this.$element.addEventListener('dblclick', () => {
+    const form = document.querySelector(
+      `form[name="${this.$element.dataset.name}"]`
+    )
+    form.classList.remove('hidden')
+    this.$element.classList.add('hidden')
+  })
 }
