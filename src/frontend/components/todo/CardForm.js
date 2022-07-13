@@ -52,7 +52,7 @@ export default function TodoCardForm({ $target, initialState, addTodo }) {
   this.$element.addEventListener('click', (e) => {
     const $todoCardCancelBtn = e.target.closest('.todo-form-cancelBtn')
     if ($todoCardCancelBtn) {
-      e.preventDefault() //서버 코드 추가하고 삭제
+      e.preventDefault()
       this.closeForm()
       return
     }
