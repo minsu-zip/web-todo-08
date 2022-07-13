@@ -33,7 +33,7 @@ export default function TodoCardContainer({
     initialState: {
       index: 0,
       todo: {
-      status: this.state.status,
+        status: this.state.status,
         title: '',
         description: '',
       },
@@ -46,9 +46,25 @@ export default function TodoCardContainer({
     this.$element
       .querySelectorAll('.todo-card-wrapper')
       .forEach(($el) => $el.remove())
-    this.state.todos.forEach(
-      (todo) => new TodoCard({ $target: this.$element, initialState: { todo } })
-    )
+    this.$element
+      .querySelectorAll('.todo-form:not(:first-child)')
+      .forEach(($el) => $el.remove())
+
+    this.state.todos.forEach((todo, index) => {
+      new TodoCard({
+        $target: this.$element,
+        initialState: { todo, index: index + 1 },
+      })
+      new TodoCardForm({
+        $target: this.$element,
+        initialState: {
+          index: index + 1,
+          todo,
+          submitButtonText: '등록',
+        },
+        submitForm: this.submitTodoEditForm,
+      })
+    })
   }
 
   this.render()
