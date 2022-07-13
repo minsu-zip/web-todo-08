@@ -13,7 +13,9 @@ export default function TodoCardContainer({ $target, initialState }) {
   }
 
   this.render = () => {
-    this.$element.innerHTML = ''
+    this.$element
+      .querySelectorAll('.todo-card-wrapper')
+      .forEach(($el) => $el.remove())
     this.state.todos.forEach(
       (todo) => new TodoCard({ $target: this.$element, initialState: { todo } })
     )
