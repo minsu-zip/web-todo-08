@@ -1,22 +1,31 @@
-export default function TodoCardForm({ $target, initialState, addTodo }) {
+export default function TodoCardForm({ $target, initialState, submitForm }) {
   this.$element = document.createElement('form')
   this.$element.classList.add('todo-form')
   this.$element.classList.add('hidden')
-  this.$element.action = '/todos'
-  this.$element.method = 'post'
   $target.appendChild(this.$element)
   this.state = initialState
+  this.formActionType = this.state.todo.id === undefined ? 'create' : 'update'
+  this.$element.method = this.formActionType === 'create' ? 'post' : 'put'
+  this.$element.action =
+    this.formActionType === 'create' ? '/todos' : `/todos/${this.state.todo.id}`
 
   this.render = () => {
-    const { status, submitButtonText } = this.state
-    this.$element.dataset.todoStatus = status
+    const {
+      index,
+      todo: { status, title, description },
+      submitButtonText,
+    } = this.state
+    const submitDisabled = title === '' && description === ''
+    this.$element.name = `${status}-${index}`
     this.$element.innerHTML = `
         <input type="hidden" name="status" value="${status}"/>
-        <input name="title" class="todo-title-input" placeholder="제목을 입력하세요"/>
-        <input name="description" class="todo-description-input" placeholder="내용을 입력하세요" />
+        <input name="title" class="todo-title-input" value="${title}" placeholder="제목을 입력하세요"/>
+        <input name="description" class="todo-description-input" value="${description}" placeholder="내용을 입력하세요" />
         <div class="todo-form-btns">
             <button class="todo-form-cancelBtn">취소</button>
-            <input type="submit" class="todo-form-submitBtn" value="${submitButtonText}" disabled>
+            <input type="submit" class="todo-form-submitBtn" value="${submitButtonText}" ${
+      submitDisabled ? 'disabled' : ''
+    }>
         </div>
     `
   }
@@ -37,16 +46,18 @@ export default function TodoCardForm({ $target, initialState, addTodo }) {
 
   this.closeForm = () => {
     this.$element.classList.add('hidden')
-  }
-
-  this.submitForm = () => {
-    //  post 요청하고 서버에서 데이터 받아서 addTodo
-    return {
-      id: Math.random(),
-      status: this.state.status,
-      title: $todoTitleInput.value,
-      description: $todoDescriptionInput.value,
+    if (this.formActionType === 'create') {
+      this.resetForm()
+      return
     }
+    const {
+      index,
+      todo: { status },
+    } = this.state
+    const $todoCard = document.querySelector(
+      `.todo-card-wrapper[data-name="${status}-${index}"]`
+    )
+    $todoCard.classList.remove('hidden')
   }
 
   this.$element.addEventListener('click', (e) => {
@@ -59,9 +70,13 @@ export default function TodoCardForm({ $target, initialState, addTodo }) {
     const $todoCardSubmitBtn = e.target.closest('.todo-form-submitBtn')
     if ($todoCardSubmitBtn) {
       e.preventDefault() //서버 코드 추가하고 삭제
-      const newTodo = this.submitForm()
-      addTodo(newTodo)
-      this.resetForm()
+      const { id, status } = this.state.todo
+      submitForm({
+        id: this.formActionType === 'create' ? Math.random() : id,
+        status,
+        title: $todoTitleInput.value,
+        description: $todoDescriptionInput.value,
+      })
       this.closeForm()
       return
     }
