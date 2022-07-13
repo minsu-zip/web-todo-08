@@ -19,7 +19,7 @@ export default function Header({ $target }) {
   }
 
   this.$element.addEventListener('click', (e) => {
-    const $hamburgerBtn = e.target.closest('button')
+    const $hamburgerBtn = e.target.closest('.sidebar-openBtn')
     if ($hamburgerBtn) {
       const $sidebar = document.querySelector('aside')
       $sidebar.classList.toggle('is-open', true)

@@ -3,7 +3,7 @@ import '../styles/global.css'
 import '../styles/index.css'
 
 import Header from './Header.js'
-import SideBar from './history/Sidebar.js'
+import HistorySidebar from './history/Sidebar.js'
 
 export default function App($target) {
   this.state = {
@@ -46,7 +46,7 @@ export default function App($target) {
   }
 
   const header = new Header({ $target })
-  const sideBar = new SideBar({ $target })
+  const sideBar = new HistorySidebar({ $target })
 
   const init = async () => {
     //

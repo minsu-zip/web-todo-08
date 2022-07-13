@@ -1,7 +1,7 @@
 import closeBtn from '../../assets/close.svg'
 import sidebar from '../../styles/sidebar.css'
 
-export default function ({ $target }) {
+export default function HistorySidebar({ $target }) {
   this.state = {
     actions: [
       {
@@ -56,7 +56,7 @@ export default function ({ $target }) {
 
   this.render = () => {
     $sidebar.innerHTML = `
-        <button class='history-closeBtn'>
+        <button class='sidebar-closeBtn'>
             <img src=${closeBtn} alt='삭제-버튼'/>
         </button>
         <div class='history-card-container'>
@@ -77,7 +77,7 @@ export default function ({ $target }) {
   this.render()
 
   $sidebar.addEventListener('click', (e) => {
-    const $closeBtn = e.target.closest('button')
+    const $closeBtn = e.target.closest('.sidebar-closeBtn')
     if ($closeBtn) {
       $sidebar.classList.toggle('is-open', false)
     }
