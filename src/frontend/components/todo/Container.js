@@ -36,6 +36,11 @@ export default function TodoContainer({ $target }) {
     )
   }
 
+  this.removeTodo = (id) => {
+    this.setState({
+      todos: this.state.todos.filter((todo) => todo.id !== id),
+    })
+  }
   const todoColumns = this.getTodoByStatus().map((todos, i) => {
     const { status, label } = todoColumnData[i]
     return new TodoColumn({
@@ -89,9 +94,7 @@ export default function TodoContainer({ $target }) {
       submitText: '삭제',
       onSubmit: () => {
         // 삭제 요청
-        this.setState({
-          todos: this.state.todos.filter((todo) => todo.id !== id),
-        })
+        this.removeTodo(id)
         confirmModal.close()
       },
     })
