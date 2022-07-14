@@ -50,13 +50,14 @@ export default function TodoContainer({ $target }) {
 
   this.updateTodo = (todo) => {
     const { id } = todo
-    const todoIndex = this.state.todos.findIndex((v) => v.id === id)
+    const { todos } = this.state
+    const todoIndex = todos.findIndex((v) => v.id === id)
     if (todoIndex === -1) return
 
     const newTodos = [
-      ...this.state.todos.slice(0, todoIndex),
+      ...todos.slice(0, todoIndex),
       todo,
-      ...this.state.todos.slice(todoIndex + 1),
+      ...todos.slice(todoIndex + 1),
     ]
     this.setState({
       todos: newTodos,
