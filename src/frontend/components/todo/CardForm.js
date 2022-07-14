@@ -19,6 +19,7 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
     } = this.state
     const submitDisabled = title === '' && description === ''
     this.$element.name = `${status}-${index}`
+    this.$element.dataset.name = `${status}-${index}`
     this.$element.innerHTML = `
         <input type="hidden" name="status" value="${status}"/>
         <input name="title" class="todo-title-input" value="${title}" placeholder="제목을 입력하세요"/>
