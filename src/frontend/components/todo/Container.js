@@ -17,58 +17,57 @@ export default function TodoContainer({ $target }) {
   this.$element.appendChild(this.$dragPoint)
 
   this.state = {
-    todos: [],
+    todosByStatus: [[], [], []],
   }
 
   this.setState = (nextState) => {
     this.state = nextState
-    this.getTodoByStatus().forEach((todos, i) => {
+    this.state.todosByStatus.forEach((todos, i) => {
       const { status, label } = todoColumnData[i]
       todoColumns[i].setState({ status, title: label, todos })
     })
   }
 
-  this.getTodoByStatus = () => {
-    return this.state.todos.reduce(
-      (acc, curr) => {
-        acc[todoColumnData.findIndex((v) => v.status === curr.status)].push(
-          curr
-        )
-        return acc
-      },
-      [[], [], []]
-    )
-  }
-
   this.removeTodo = (id) => {
+    const newTodosByStatus = this.state.todosByStatus.map((todos) => {
+      const todoIndex = todos.findIndex((todo) => todo.id === id)
+      if (todoIndex === -1) return [...todos]
+      return todos.filter((todo) => todo.id !== id)
+    })
     this.setState({
-      todos: this.state.todos.filter((todo) => todo.id !== id),
+      todosByStatus: newTodosByStatus,
     })
   }
 
   this.addTodo = (todo) => {
+    const { status } = todo
+    const columnIndex = todoColumnData.findIndex(
+      (column) => column.status === status
+    )
+    const newTodosByStatus = this.state.todosByStatus.map((todos, index) =>
+      index === columnIndex ? [todo, ...todos] : [...todos]
+    )
     this.setState({
-      todos: [todo, ...this.state.todos],
+      todosByStatus: newTodosByStatus,
     })
   }
 
   this.updateTodo = (todo) => {
-    const { id } = todo
-    const { todos } = this.state
-    const todoIndex = todos.findIndex((v) => v.id === id)
-    if (todoIndex === -1) return
-
-    const newTodos = [
-      ...todos.slice(0, todoIndex),
-      todo,
-      ...todos.slice(todoIndex + 1),
-    ]
+    const { id, status } = todo
+    const columnIndex = todoColumnData.findIndex(
+      (column) => column.status === status
+    )
+    const newTodosByStatus = this.state.todosByStatus.map((todos, index) => {
+      if (index !== columnIndex) return [...todos]
+      const todoIndex = todos.findIndex((todo) => todo.id === id)
+      return [...todos.slice(0, todoIndex), todo, ...todos.slice(todoIndex + 1)]
+    })
     this.setState({
-      todos: newTodos,
+      todosByStatus: newTodosByStatus,
     })
   }
 
-  const todoColumns = this.getTodoByStatus().map((todos, i) => {
+  const todoColumns = this.state.todosByStatus.map((todos, i) => {
     const { status, label } = todoColumnData[i]
     return new TodoColumn({
       $target: this.$element,
@@ -86,31 +85,37 @@ export default function TodoContainer({ $target }) {
   this.init = () => {
     // data fetch
     this.setState({
-      todos: [
-        {
-          id: 1,
-          status: 'todo',
-          title: '컴포넌트 구현',
-          description: '화면에 필요한 컴포넌트들을 생성합니다.',
-        },
-        {
-          id: 2,
-          status: 'todo',
-          title: 'API 구현',
-          description: '웹 어플리케이션에 필요한 API를 구현합니다.',
-        },
-        {
-          id: 3,
-          status: 'inprogress',
-          title: '컴포넌트 구조 설계',
-          description: '컴포넌트 구조를 설계합니다.',
-        },
-        {
-          id: 4,
-          status: 'done',
-          title: '기본 스타일 추가',
-          description: '기본 스타일 파일을 추가합니다.',
-        },
+      todosByStatus: [
+        [
+          {
+            id: 1,
+            status: 'todo',
+            title: '컴포넌트 구현',
+            description: '화면에 필요한 컴포넌트들을 생성합니다.',
+          },
+          {
+            id: 2,
+            status: 'todo',
+            title: 'API 구현',
+            description: '웹 어플리케이션에 필요한 API를 구현합니다.',
+          },
+        ],
+        [
+          {
+            id: 3,
+            status: 'inprogress',
+            title: '컴포넌트 구조 설계',
+            description: '컴포넌트 구조를 설계합니다.',
+          },
+        ],
+        [
+          {
+            id: 4,
+            status: 'done',
+            title: '기본 스타일 추가',
+            description: '기본 스타일 파일을 추가합니다.',
+          },
+        ],
       ],
     })
   }

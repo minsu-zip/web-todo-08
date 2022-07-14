@@ -40,9 +40,11 @@ export default function TodoCardContainer({
     this.$element
       .querySelectorAll('.todo-card-wrapper')
       .forEach(($el) => $el.remove())
-    this.$element
-      .querySelectorAll('.todo-form:not(:first-child)')
-      .forEach(($el) => $el.remove())
+    Array.from([this.$element.querySelectorAll('.todo-form')])
+      .slice(1)
+      .forEach(($el) => {
+        $el.remove()
+      })
 
     this.state.todos.forEach((todo, index) => {
       new TodoCard({
