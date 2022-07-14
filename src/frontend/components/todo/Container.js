@@ -6,7 +6,7 @@ import TodoAPI from '../../api/todo'
 const todoColumnData = [
   { status: 'todo', label: '해야할 일' },
   { status: 'inprogress', label: '하고있는 일' },
-  { status: 'done', label: '완료할 일' },
+  { status: 'done', label: '완료한 일' },
 ]
 
 export default function TodoContainer({ $target }) {
