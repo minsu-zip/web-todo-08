@@ -15,7 +15,13 @@ class TodoService {
         },
         [[], [], []]
       )
-      todosByStatus.forEach((todos) => todos.sort())
+      todosByStatus.forEach((todos) =>
+        todos.sort((a, b) => {
+          if (a.created_at > b.created_at) return -1
+          else if (b.created_at > a.created_at) return 1
+          else return 0
+        })
+      )
       resCallback(todosByStatus)
     })
   }
