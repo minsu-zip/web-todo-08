@@ -56,7 +56,7 @@ export default function TodoCardContainer({
         initialState: {
           index: index + 1,
           todo,
-          submitButtonText: '등록',
+          submitButtonText: '수정',
         },
         submitForm: updateTodo,
       })
