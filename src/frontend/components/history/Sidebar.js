@@ -1,5 +1,4 @@
 import { getHistory } from '../../api/history.js'
-import moment from 'moment'
 import closeBtn from '../../assets/close.svg'
 import sidebar from '../../styles/sidebar.css'
 
