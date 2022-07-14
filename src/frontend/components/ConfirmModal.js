@@ -24,6 +24,9 @@ export default function ConfirmModal({ $target, initialState }) {
     document
       .querySelector('.confirm-submitBtn')
       .addEventListener('click', this.state.onSubmit)
+    document
+      .querySelector('.confirm-cancelBtn')
+      .addEventListener('click', this.close)
   }
 
   this.open = () => {
