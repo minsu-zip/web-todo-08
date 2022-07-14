@@ -211,7 +211,7 @@ export default function TodoContainer({ $target }) {
     // data[map[targetStatus[0]]] = targetChangeList
     data[map[todoCardStatus[0]]] = prevList
 
-    console.log(data)
+    // console.log(data)
 
     this.setState({
       todosByStatus: data,
@@ -301,7 +301,7 @@ export default function TodoContainer({ $target }) {
 
   const handleMouseUp = () => {
     prevCard = targetLi.previousSibling
-    console.log(prevCard)
+    //    console.log(prevCard)
 
     if (prevCard.getAttribute('data-name')) {
       if (targetLi && prevCard) {
