@@ -1,3 +1,5 @@
+import TodoAPI from '../../api/todo'
+
 export default function TodoCardForm({ $target, initialState, todoAction }) {
   this.$element = document.createElement('form')
   this.$element.classList.add('todo-form')
@@ -60,23 +62,34 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
     $todoCard.classList.remove('hidden')
   }
 
+  this.getFormData = () => {
+    const { id, status } = this.state.todo
+    return {
+      id,
+      status,
+      title: $todoTitleInput.value,
+      description: $todoDescriptionInput.value,
+    }
+  }
+
+  this.submitForm = (formData) => {
+    const { id, ...body } = formData
+    if (this.formActionType === 'update') {
+      TodoAPI.patch(id, body, todoAction) //서버에서 새 데이터 내려줘야 함
+    }
+  }
+
   this.$element.addEventListener('click', (e) => {
+    e.preventDefault()
     const $todoCardCancelBtn = e.target.closest('.todo-form-cancelBtn')
     if ($todoCardCancelBtn) {
-      e.preventDefault()
       this.closeForm()
       return
     }
     const $todoCardSubmitBtn = e.target.closest('.todo-form-submitBtn')
     if ($todoCardSubmitBtn) {
-      e.preventDefault() //서버 코드 추가하고 삭제
-      const { id, status } = this.state.todo
-      submitForm({
-        id: this.formActionType === 'create' ? Math.random() : id,
-        status,
-        title: $todoTitleInput.value,
-        description: $todoDescriptionInput.value,
-      })
+      const formData = this.getFormData()
+      this.submitForm(formData)
       this.closeForm()
       return
     }
