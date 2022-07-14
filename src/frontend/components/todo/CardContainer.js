@@ -18,16 +18,6 @@ export default function TodoCardContainer({
     this.render()
   }
 
-  this.submitTodoCreateForm = (todo) => {
-    //  post 요청하고 서버에서 데이터 받기
-    addTodo(todo)
-  }
-
-  this.submitTodoEditForm = (todo) => {
-    //  patch 요청하고 서버에서 데이터 받기
-    updateTodo(todo)
-  }
-
   new TodoCardForm({
     $target: this.$element,
     initialState: {
@@ -39,7 +29,7 @@ export default function TodoCardContainer({
       },
       submitButtonText: '등록',
     },
-    submitForm: this.submitTodoCreateForm,
+    submitForm: addTodo,
   })
 
   this.render = () => {
@@ -62,7 +52,7 @@ export default function TodoCardContainer({
           todo,
           submitButtonText: '등록',
         },
-        submitForm: this.submitTodoEditForm,
+        submitForm: updateTodo,
       })
     })
   }
