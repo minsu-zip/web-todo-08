@@ -104,6 +104,11 @@
   border-radius: 0.6rem;
 }
 
+.todo-card-container > .todo-form {
+  background-color: white;
+  margin-bottom: 1.6rem;
+}
+
 .hidden {
   display: none;
 }

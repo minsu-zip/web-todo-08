@@ -15,8 +15,27 @@ class TodoService {
         },
         [[], [], []]
       )
-      todosByStatus.forEach((todos) => todos.sort())
+      todosByStatus.forEach((todos) =>
+        todos.sort((a, b) => {
+          if (a.created_at > b.created_at) return -1
+          else if (b.created_at > a.created_at) return 1
+          else return 0
+        })
+      )
       resCallback(todosByStatus)
+    })
+  }
+
+  postTodo(data, resCallback) {
+    const { status, title, description } = data
+    const createQuery = `insert into todo (status, title, description) 
+values('${status}', '${title}', '${description}');`
+
+    dbPool.query(createQuery, (err, todo) => {
+      const selectQuery = `select * from todo where id = ${todo.insertId};`
+      dbPool.query(selectQuery, (err, todo) => {
+        resCallback(todo)
+      })
     })
   }
 

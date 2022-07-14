@@ -75,7 +75,11 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
   this.submitForm = (formData) => {
     const { id, ...body } = formData
     if (this.formActionType === 'update') {
-      TodoAPI.patch(id, body, todoAction) //서버에서 새 데이터 내려줘야 함
+      TodoAPI.patch(id, body, todoAction)
+      return
+    }
+    if (this.formActionType === 'create') {
+      TodoAPI.post(body, todoAction)
     }
   }
 
