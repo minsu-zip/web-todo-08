@@ -52,12 +52,29 @@ export default function TodoContainer({ $target }) {
     })
   }
 
+  this.updateTodo = (todo) => {
+    const { id } = todo
+    const { todos } = this.state
+    const todoIndex = todos.findIndex((v) => v.id === id)
+    if (todoIndex === -1) return
+
+    const newTodos = [
+      ...todos.slice(0, todoIndex),
+      todo,
+      ...todos.slice(todoIndex + 1),
+    ]
+    this.setState({
+      todos: newTodos,
+    })
+  }
+
   const todoColumns = this.getTodoByStatus().map((todos, i) => {
     const { status, label } = todoColumnData[i]
     return new TodoColumn({
       $target: this.$element,
       initialState: { status, title: label, todos },
       addTodo: this.addTodo,
+      updateTodo: this.updateTodo,
     })
   })
 

@@ -13,7 +13,11 @@ export default function TodoCard({ $target, initialState }) {
   }
 
   this.render = () => {
-    const { title, description, id } = this.state.todo
+    const {
+      index,
+      todo: { status, title, description, id },
+    } = this.state
+    this.$element.dataset.name = `${status}-${index}`
     this.$element.innerHTML = `
         <div class="todo-card-content">
             <p class="todo-card-title">${title}</p>
@@ -27,4 +31,12 @@ export default function TodoCard({ $target, initialState }) {
   }
 
   this.render()
+
+  this.$element.addEventListener('dblclick', () => {
+    const form = document.querySelector(
+      `form[name="${this.$element.dataset.name}"]`
+    )
+    form.classList.remove('hidden')
+    this.$element.classList.add('hidden')
+  })
 }

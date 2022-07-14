@@ -32,9 +32,7 @@ export default function TodoColumnHeader({ $target, initialState }) {
   this.$element.addEventListener('click', (e) => {
     const $todoCardAddBtn = e.target.closest('.todo-card-addBtn')
     if ($todoCardAddBtn) {
-      const form = document.querySelector(
-        `form[data-todo-status="${this.state.status}"]`
-      )
+      const form = document.querySelector(`form[name="${this.state.status}-0"]`)
       form.classList.toggle('hidden')
     }
   })
