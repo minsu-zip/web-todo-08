@@ -56,10 +56,10 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
       index,
       todo: { status },
     } = this.state
-    const $todoCard = document.querySelector(
-      `.todo-card-wrapper[data-name="${status}-${index}"]`
+    const $todoCardContent = document.querySelector(
+      `.todo-card-wrapper[data-name="${status}-${index}"] > .todo-card-content-wrapper`
     )
-    $todoCard.classList.remove('hidden')
+    $todoCardContent.classList.remove('hidden')
   }
 
   this.getFormData = () => {
