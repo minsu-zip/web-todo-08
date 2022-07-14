@@ -60,18 +60,17 @@ export default function TodoContainer({ $target }) {
   }
 
   this.updateTodo = (todo) => {
-    const { id } = todo
-    const { todos } = this.state
-    const todoIndex = todos.findIndex((v) => v.id === id)
-    if (todoIndex === -1) return
-
-    const newTodos = [
-      ...todos.slice(0, todoIndex),
-      todo,
-      ...todos.slice(todoIndex + 1),
-    ]
+    const { id, status } = todo
+    const columnIndex = todoColumnData.findIndex(
+      (column) => column.status === status
+    )
+    const newTodosByStatus = this.state.todosByStatus.map((todos, index) => {
+      if (index !== columnIndex) return [...todos]
+      const todoIndex = todos.findIndex((todo) => todo.id === id)
+      return [...todos.slice(0, todoIndex), todo, ...todos.slice(todoIndex + 1)]
+    })
     this.setState({
-      todos: newTodos,
+      todosByStatus: newTodosByStatus,
     })
   }
 
