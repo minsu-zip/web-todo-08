@@ -41,12 +41,18 @@
 
 .todo-card-wrapper {
   display: flex;
-  justify-content: space-between;
   margin-bottom: 1.6rem;
   background-color: var(--color-white);
-  padding: 1.6rem;
   border-radius: 0.6rem;
   user-select: none;
+}
+
+.todo-card-content-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 1.6rem;
+  background-color: white;
 }
 
 /* 드래그 이벤트 css*/
@@ -95,9 +101,7 @@
 .todo-form {
   border: 1px solid var(--color-blue);
   padding: 1.6rem;
-  margin-bottom: 1.6rem;
   border-radius: 0.6rem;
-  background-color: white;
 }
 
 .hidden {

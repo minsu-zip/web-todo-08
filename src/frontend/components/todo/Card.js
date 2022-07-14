@@ -1,42 +1,33 @@
-import closeIcon from '../../assets/close.svg'
+import TodoCardContent from './CardContent'
+import TodoCardForm from './CardForm'
 
-export default function TodoCard({ $target, initialState }) {
+export default function TodoCard({ $target, initialState, todoAction }) {
   this.$element = document.createElement('div')
   this.$element.classList.add('todo-card-wrapper')
   $target.appendChild(this.$element)
 
   this.state = initialState
 
-  this.setState = (nextState) => {
-    this.state = nextState
-    this.render()
-  }
-
   this.render = () => {
-    const {
-      index,
-      todo: { status, title, description, id },
-    } = this.state
-    this.$element.dataset.name = `${status}-${index}`
-    this.$element.innerHTML = `
-        <div class="todo-card-content">
-            <p class="todo-card-title">${title}</p>
-            <p class="todo-card-description">${description}</p>
-            <p class="todo-card-author">author by web</p>
-        </div>
-        <button data-todo-id="${id}" class="todo-card-removeBtn">
-            <img src="${closeIcon}" alt="todo-card-removeBtn"/>
-        </button>
-    `
+    const { index, todo, submitButtonText } = this.state
+    this.$element.dataset.name = `${this.state.todo.status}-${index}`
+    this.$element.innerHTML = ''
+    new TodoCardContent({
+      $target: this.$element,
+      initialState: {
+        todo,
+      },
+    })
+    new TodoCardForm({
+      $target: this.$element,
+      initialState: {
+        index,
+        todo,
+        submitButtonText,
+      },
+      todoAction,
+    })
   }
 
   this.render()
-
-  this.$element.addEventListener('dblclick', () => {
-    const form = document.querySelector(
-      `form[name="${this.$element.dataset.name}"]`
-    )
-    form.classList.remove('hidden')
-    this.$element.classList.add('hidden')
-  })
 }
