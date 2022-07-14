@@ -5,8 +5,9 @@ var logger = require('morgan')
 const webpack = require('webpack')
 const middleware = require('webpack-dev-middleware')
 const compiler = webpack(require('../../webpack.config'))
+require('./config/db')
 
-var usersRouter = require('./routes/users')
+const todoRouter = require('./routes/todo')
 
 var app = express()
 
@@ -32,16 +33,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/api/greeting', (req, res) => {
-  setTimeout(() => {
-    res.json({ data: 'Hello world!' })
-  }, 200)
-})
+app.use('/api/todos', todoRouter)
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, `../../public/index.html`))
 })
-
-app.use('/users', usersRouter)
 
 module.exports = app
