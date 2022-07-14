@@ -115,4 +115,10 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
       !$todoTitleInput.value || !$todoDescriptionInput.value
     $submitBtn.disabled = submitBtnDisabled
   })
+
+  const preventEventBubbling = (e) => e.stopPropagation()
+  this.$element.addEventListener('mousemove', preventEventBubbling)
+  this.$element.addEventListener('mousedown', preventEventBubbling)
+  this.$element.addEventListener('mouseup', preventEventBubbling)
+  this.$element.addEventListener('mouseleave', preventEventBubbling)
 }
