@@ -1,3 +1,8 @@
+export const API = {
+  get: (path) => fetcher(path, 'GET'),
+  post: (path, body) => fetcher(path, 'POST', { body }),
+  delete: (path) => fetcher(path, 'DELETE'),
+  patch: (path, body) => fetcher(path, 'PATCH', { body }),
 }
 
 const fetcher = (path, method, body) =>
