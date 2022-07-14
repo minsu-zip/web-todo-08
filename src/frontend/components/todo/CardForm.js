@@ -11,14 +11,29 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
   this.$element.action =
     this.formActionType === 'create' ? '/todos' : `/todos/${this.state.todo.id}`
 
+  this.setState = (nextState) => {
+    this.state = nextState
+    this.render()
+  }
+
+  let $todoTitleInput, $todoDescriptionInput, $submitBtn
+
   this.render = () => {
     const {
       index,
-      todo: { status, title, description },
+      todo: { id, status, title, description },
       submitButtonText,
     } = this.state
-    const submitDisabled = title === '' && description === ''
+    this.formActionType = id === undefined ? 'create' : 'update'
+    this.$element.method = this.formActionType === 'create' ? 'post' : 'put'
+    this.$element.action =
+      this.formActionType === 'create'
+        ? '/todos'
+        : `/todos/${this.state.todo.id}`
     this.$element.name = `${status}-${index}`
+    this.$element.dataset.name = `${status}-${index}`
+
+    const submitDisabled = title === '' && description === ''
     this.$element.innerHTML = `
         <input type="hidden" name="status" value="${status}"/>
         <input name="title" class="todo-title-input" value="${title}" placeholder="제목을 입력하세요"/>
@@ -30,15 +45,15 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
     }>
         </div>
     `
+
+    $todoTitleInput = this.$element.querySelector('.todo-title-input')
+    $todoDescriptionInput = this.$element.querySelector(
+      '.todo-description-input'
+    )
+    $submitBtn = this.$element.querySelector('input[type="submit"]')
   }
 
   this.render()
-
-  const $todoTitleInput = this.$element.querySelector('.todo-title-input')
-  const $todoDescriptionInput = this.$element.querySelector(
-    '.todo-description-input'
-  )
-  const $submitBtn = this.$element.querySelector('input[type="submit"]')
 
   this.resetForm = () => {
     $todoTitleInput.value = ''
@@ -104,4 +119,10 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
       !$todoTitleInput.value || !$todoDescriptionInput.value
     $submitBtn.disabled = submitBtnDisabled
   })
+
+  const preventEventBubbling = (e) => e.stopPropagation()
+  this.$element.addEventListener('mousemove', preventEventBubbling)
+  this.$element.addEventListener('mousedown', preventEventBubbling)
+  this.$element.addEventListener('mouseup', preventEventBubbling)
+  this.$element.addEventListener('mouseleave', preventEventBubbling)
 }
