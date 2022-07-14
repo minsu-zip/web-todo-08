@@ -1,4 +1,4 @@
-export default function TodoCardForm({ $target, initialState, submitForm }) {
+export default function TodoCardForm({ $target, initialState, todoAction }) {
   this.$element = document.createElement('form')
   this.$element.classList.add('todo-form')
   this.$element.classList.add('hidden')
