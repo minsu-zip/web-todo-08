@@ -8,4 +8,14 @@ const getTodos = (req, res) => {
   })
 }
 
-module.exports = { getTodos }
+const updateTodo = (req, res) => {
+  const { id } = req.params
+  const { status, title, description } = req.body
+
+  const data = { id, status, title, description }
+  todoService.updateTodo(data, ([updatedTodo]) => {
+    res.status(200).send(updatedTodo)
+  })
+}
+
+module.exports = { getTodos, updateTodo }

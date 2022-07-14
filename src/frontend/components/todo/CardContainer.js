@@ -33,7 +33,7 @@ export default function TodoCardContainer({
       },
       submitButtonText: '등록',
     },
-    submitForm: addTodo,
+    todoAction: addTodo,
   })
 
   this.render = () => {
@@ -56,9 +56,9 @@ export default function TodoCardContainer({
         initialState: {
           index: index + 1,
           todo,
-          submitButtonText: '등록',
+          submitButtonText: '수정',
         },
-        submitForm: updateTodo,
+        todoAction: updateTodo,
       })
     })
   }

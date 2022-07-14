@@ -1,7 +1,7 @@
 import TodoColumn from './Column'
 import ConfirmModal from '../ConfirmModal'
 
-import { API } from '../../api'
+import TodoAPI from '../../api/todo'
 
 const todoColumnData = [
   { status: 'todo', label: '해야할 일' },
@@ -85,7 +85,7 @@ export default function TodoContainer({ $target }) {
   })
 
   this.init = () => {
-    API.get('/api/todos').then((todosByStatus) => {
+    TodoAPI.getList((todosByStatus) => {
       this.setState({ todosByStatus })
     })
   }
