@@ -7,6 +7,11 @@ export default function TodoCardContent({ $target, initialState }) {
 
   this.state = initialState
 
+  this.setState = (nextState) => {
+    this.state = nextState
+    this.render()
+  }
+
   this.render = () => {
     const {
       todo: { title, description, id },
