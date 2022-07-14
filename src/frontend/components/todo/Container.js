@@ -97,9 +97,10 @@ export default function TodoContainer({ $target }) {
       message: '선택한 카드를 삭제할까요?',
       submitText: '삭제',
       onSubmit: () => {
-        // 삭제 요청
-        this.removeTodo(id)
-        confirmModal.close()
+        TodoAPI.delete(id, () => {
+          this.removeTodo(id)
+          confirmModal.close()
+        })
       },
     })
     confirmModal.open()

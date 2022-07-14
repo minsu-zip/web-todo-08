@@ -18,6 +18,14 @@ const postTodo = (req, res) => {
   })
 }
 
+const deleteTodo = (req, res) => {
+  const { id } = req.params
+
+  todoService.deleteTodo(id, () => {
+    res.status(200).send({})
+  })
+}
+
 const updateTodo = (req, res) => {
   const { id } = req.params
   const { status, title, description } = req.body
@@ -28,4 +36,4 @@ const updateTodo = (req, res) => {
   })
 }
 
-module.exports = { getTodos, postTodo, updateTodo }
+module.exports = { getTodos, postTodo, deleteTodo, updateTodo }

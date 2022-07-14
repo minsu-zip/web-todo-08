@@ -39,6 +39,13 @@ values('${status}', '${title}', '${description}');`
     })
   }
 
+  deleteTodo(id, resCallback) {
+    const deleteQuery = `delete from todo where id = ${id};`
+    dbPool.query(deleteQuery, (err) => {
+      resCallback()
+    })
+  }
+
   updateTodo(data, resCallback) {
     const { id, ...rest } = data
     const updateQuery =
