@@ -6,3 +6,10 @@ exports.historyService = function (resCallback) {
     resCallback(historys)
   })
 }
+
+exports.historyActionService = function (data, resCallback) {
+  const createQuery = `insert into history (title) values('${data.title}');`
+  dbPool.query(createQuery, (err, action) => {
+    resCallback(action)
+  })
+}
