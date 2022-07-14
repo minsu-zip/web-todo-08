@@ -8,6 +8,7 @@ const compiler = webpack(require('../../webpack.config'))
 require('./config/db')
 
 const todoRouter = require('./routes/todo')
+const historyRouter = require('./routes/history')
 
 var app = express()
 
@@ -34,6 +35,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/todos', todoRouter)
+app.use('/api/historys', historyRouter)
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, `../../public/index.html`))
