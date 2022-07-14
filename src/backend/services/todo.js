@@ -26,6 +26,19 @@ class TodoService {
     })
   }
 
+  postTodo(data, resCallback) {
+    const { status, title, description } = data
+    const createQuery = `insert into todo (status, title, description) 
+values('${status}', '${title}', '${description}');`
+
+    dbPool.query(createQuery, (err, todo) => {
+      const selectQuery = `select * from todo where id = ${todo.insertId};`
+      dbPool.query(selectQuery, (err, todo) => {
+        resCallback(todo)
+      })
+    })
+  }
+
   updateTodo(data, resCallback) {
     const { id, ...rest } = data
     const updateQuery =
