@@ -170,6 +170,7 @@ export default function TodoContainer({ $target }) {
     // target을 todoCard 위로 옮겨줍니다.
     if (isBefore(targetLi, $todoCard) && $todoCard.className !== 'startLine') {
       $todoCard.parentNode.insertBefore(targetLi, $todoCard)
+      return
     }
     // 그 외에는 밑으로 이동.
     $todoCard.parentNode?.insertBefore(targetLi, $todoCard.nextSibling)
