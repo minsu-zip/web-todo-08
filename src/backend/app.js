@@ -35,7 +35,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/todos', todoRouter)
-app.use('/api/historys', historyRouter)
+app.use('/api/history', historyRouter)
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, `../../public/index.html`))

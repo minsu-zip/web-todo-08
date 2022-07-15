@@ -1,4 +1,4 @@
 import { API } from '.'
 
 export const getHistory = (resCallback) =>
-  API.get('/api/historys').then(resCallback)
+  API.get('/api/history').then(resCallback)
