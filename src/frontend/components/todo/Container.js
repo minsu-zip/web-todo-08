@@ -116,6 +116,16 @@ export default function TodoContainer({ $target }) {
   })
 
   const dragPoint = this.$dragPoint
+  let clicked = false
+  let dragPointLi = undefined
+  let $todoCard = undefined
+
+  // 상태에 따른 데이터 배열 인덱스
+  const map = {
+    todo: 0,
+    inprogress: 1,
+    done: 2,
+  }
 
   // element2이 element1보다 앞에 있는지 검사
   const isBefore = (element1, element2) => {
@@ -124,105 +134,59 @@ export default function TodoContainer({ $target }) {
     return element1.previousSibling === element2
   }
 
-  let clicked = false
-  let dragPointLi = undefined
-
-  let $todoCard = undefined
-
   // 선택한 카드 정보
   let targetLi = undefined
   let targetNode = undefined
   let targetStatus = []
 
-  const getCard = () => {
+  const getClickedCard = () => {
     if (!targetLi) return
-
     // 선택한 카드의 status, 인덱스 위치 값
     targetStatus = targetLi.getAttribute('data-name').split('-')
     // 선택한 카드의 객체 정보
-    let todos = []
-    if (targetStatus[0] === 'todo') {
-      todos = [...this.state.todosByStatus[0]]
-    } else if (targetStatus[0] === 'inprogress') {
-      todos = [...this.state.todosByStatus[1]]
-    } else if (targetStatus[0] === 'done') {
-      todos = [...this.state.todosByStatus[2]]
-    }
-
+    const todos = [...this.state.todosByStatus[map[targetStatus[0]]]]
     targetNode = todos[Number(targetStatus[1]) - 1]
-    // console.log('선택한 카드 status', targetStatus)
-    // console.log('선택한 카드 객체', targetNode)
   }
 
   // 인접한 카드 정보
   let prevCard = undefined
-  let todoCardNode = undefined
-  let todoCardStatus = []
+  let prevCardNode = undefined
+  let prevCardStatus = []
 
-  const getNearNode = () => {
+  const getPrevCard = () => {
     if (!prevCard) return
     // 선택한 카드의 status, 인덱스 위치 값
-    todoCardStatus = prevCard.getAttribute('data-name').split('-')
+    prevCardStatus = prevCard.getAttribute('data-name').split('-')
     // 선택한 카드의 객체 정보
+    const todos = [...this.state.todosByStatus[map[prevCardStatus[0]]]]
+    prevCardNode = todos[Number(prevCardStatus[1]) - 1]
+  }
 
-    let todos = []
-    if (todoCardStatus[0] === 'todo') {
-      todos = [...this.state.todosByStatus[0]]
-    } else if (todoCardStatus[0] === 'inprogress') {
-      todos = [...this.state.todosByStatus[1]]
-    } else if (todoCardStatus[0] === 'done') {
-      todos = [...this.state.todosByStatus[2]]
+  const setStateCard = () => {
+    //속성 값 변경
+    if (targetNode.status !== prevCardStatus[0]) {
+      TodoAPI.patch(targetNode.id, { status: prevCardStatus[0] })
+      targetNode.status = prevCardStatus[0]
     }
-
-    todoCardNode = todos[Number(todoCardStatus[1]) - 1]
-    // console.log('인접한 카드 status', todoCardStatus)
-    // console.log('인접한 카드 객체', todoCardNode)
-    moveCard()
-  }
-
-  const map = {
-    todo: 0,
-    inprogress: 1,
-    done: 2,
-  }
-
-  const moveCard = () => {
-    // const todoList = [...this.state.todosByStatus[0]]
-    // const inprogressList = [...this.state.todosByStatus[1]]
-    // const doneList = [...this.state.todosByStatus[2]]
 
     const data = [...this.state.todosByStatus]
 
-    //속성 값 변경
-    if (targetNode.status !== todoCardStatus[0]) {
-      TodoAPI.patch(targetNode.id, { status: todoCardStatus[0] })
-      targetNode.status = todoCardStatus[0]
-    }
-
+    // 클린된 곳의 데이터를 찾아서 삭제 해준다.
     const targetList = [...data[map[targetStatus[0]]]]
     const targetChangeList = targetList.filter(
-      (item, idx) => idx !== Number(targetStatus[1]) - 1
+      (_, idx) => idx !== Number(targetStatus[1]) - 1
     )
-
     data[map[targetStatus[0]]] = targetChangeList
 
-    const prevList = [...data[map[todoCardStatus[0]]]]
-    prevList.splice(Number(todoCardStatus[1]), 0, targetNode)
+    // 상위의 데이터를 찾아서 해당 위치 뒤에 클린된 카드 데이터를 삽입
+    const prevList = [...data[map[prevCardStatus[0]]]]
+    prevList.splice(Number(prevCardStatus[1]), 0, targetNode)
+    data[map[prevCardStatus[0]]] = prevList
 
-    //console.log(prevList)
-
-    // const data = [...this.state.todosByStatus]
-    // data[map[targetStatus[0]]] = targetChangeList
-    data[map[todoCardStatus[0]]] = prevList
-
-    // console.log(data)
-
+    // 데이터 교체
     this.setState({
       todosByStatus: data,
     })
-
-    // console.log(targetChangeList)
-    // console.log(prevList)
   }
 
   const handleMouseMove = (event) => {
@@ -234,44 +198,27 @@ export default function TodoContainer({ $target }) {
 
     // 잠시 현재 dragPoint element를 가리고 현재 좌표의 element를 가져온다
     dragPoint.hidden = true
-    const elemBelow = document.elementFromPoint(pageX, pageY)
-    $todoCard = elemBelow.closest('.todo-card-wrapper')
 
+    const elemBelow = document.elementFromPoint(pageX, pageY)
+    // 마우스 좌표에서 가장 가까운 카드 받아오기 (상위 카드)
+    $todoCard = elemBelow.closest('.todo-card-wrapper')
+    // 마우스 좌표에서 가장 가까운 카드 컨테이너 받아오기
     const $todoCardContainer = elemBelow.closest('.todo-card-container')
     dragPoint.hidden = false
 
+    // 마우스 따라 이동
     dragPoint.style.left = pageX - dragPoint.offsetWidth / 2 + 'px'
     dragPoint.style.top = pageY - dragPoint.offsetHeight / 2 + 'px'
 
-    if (!$todoCard) {
-      if ($todoCardContainer) {
-        const startLine = $todoCardContainer.querySelector('.startLine')
-
-        //
-
-        //
-
-        const { top } = startLine.getBoundingClientRect()
-        if (top > pageY) {
-          // startLine.parentNode.insertBefore(targetLi, startLine.nextSibling)
-        } else {
-          //  하단에 옮겨지는 경우
-          $todoCardContainer.appendChild(targetLi)
-        }
-      }
-
+    // 가장 가까운 카드는 없고 카드 컨테이너가 있는 경우
+    // -> 카드가 제일 상단에 위치해야 하거나 제일 하단에 위치해야함
+    // 그냥 하위에 요소를 넣으면 된다
+    if (!$todoCard && $todoCardContainer) {
+      $todoCardContainer.appendChild(targetLi)
       return
     }
-
-    // 만약 같은 $todoCardContainer에서 taeget이 가까운 todoCard보다 앞에 있다면
-    // target을 todoCard 위로 옮겨줍니다.
-    // if (isBefore(targetLi, $todoCard) && $todoCard.className !== 'startLine') {
-    //   $todoCard.parentNode.insertBefore(targetLi, $todoCard)
-    //   return
-    // }
-
-    // // 그 외에는 밑으로 이동.
-    $todoCard.parentNode?.insertBefore(targetLi, $todoCard)
+    // 가장 가까운 카드가 있는 경우 해당 카드 하단에 배치
+    $todoCard?.parentNode?.insertBefore(targetLi, $todoCard)
   }
 
   const handleMouseDown = (event) => {
@@ -284,33 +231,29 @@ export default function TodoContainer({ $target }) {
     if (targetRemove === null || targetRemove.className === 'startLine') {
       return
     }
-
     // 현재 삭제하려고하는 taeget li태그입니다.
     targetLi = targetRemove
-    // 카드 정보 얻는 함수
-    getCard()
-
-    // 내부 값을 복사한 element를 마우스를 따라다닐 dragPoint로 설정합니다.
+    // 내부 값을 복사한 element를 마우스를 따라다닐 dragPoint로 설정
     dragPointLi = targetRemove.cloneNode(true)
-    // target을 불투명하게 하기 위해 class를 넣어주세요
+    // target을 불투명하게 하기 위한 class
     targetLi.classList.add('temp')
 
     const { pageX, pageY } = event
-
     dragPoint.appendChild(dragPointLi)
-
     dragPoint.style.left = pageX - dragPoint.offsetWidth / 2 + 'px'
     dragPoint.style.top = pageY - dragPoint.offsetHeight / 2 + 'px'
   }
 
   const handleMouseUp = () => {
     prevCard = targetLi.previousSibling
-    //    console.log(prevCard)
-
-    if (prevCard.getAttribute('data-name')) {
-      if (targetLi && prevCard) {
-        getNearNode()
-      }
+    // 선택한 카드와 선택한 카드 상위 카드 or 컴포넌트가 있는 경우
+    if (targetLi && prevCard.getAttribute('data-name')) {
+      // 선택한 카드 정보
+      getClickedCard()
+      // 상위 카드 정보
+      getPrevCard()
+      // 교체된 위치에 따라 전체 데이터 교체
+      setStateCard()
     }
 
     if (!clicked) {
@@ -326,6 +269,7 @@ export default function TodoContainer({ $target }) {
     }
     dragPointLi = undefined
     targetLi = undefined
+    prevCard = undefined
   }
 
   const handleMouseLeave = () => {
