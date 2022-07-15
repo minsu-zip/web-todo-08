@@ -7,7 +7,9 @@ exports.getHistorys = function (req, res) {
 }
 
 exports.postHistory = function (req, res) {
-  historyActionService((action) => {
+  const data = req.body
+
+  historyActionService(data, (action) => {
     res.status(200).send(action)
   })
 }
