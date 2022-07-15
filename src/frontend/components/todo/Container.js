@@ -194,7 +194,10 @@ export default function TodoContainer({ $target }) {
     const data = [...this.state.todosByStatus]
 
     //속성 값 변경
-    targetNode.status = todoCardStatus[0]
+    if (targetNode.status !== todoCardStatus[0]) {
+      TodoAPI.patch(targetNode.id, { status: todoCardStatus[0] })
+      targetNode.status = todoCardStatus[0]
+    }
 
     const targetList = [...data[map[targetStatus[0]]]]
     const targetChangeList = targetList.filter(
