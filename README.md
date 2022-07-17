@@ -1,4 +1,7 @@
 # Vanilla JS Mission: TO-DO List - web 8조 박민수, 박효진
+#### :calendar: 프로젝트 기간: 2022.07.11 ~ 2022.07.15
+
+# [🔗 todo](http://ec2-3-34-184-43.ap-northeast-2.compute.amazonaws.com:3000/)
 
 ## Getting Started
 
