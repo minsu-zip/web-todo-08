@@ -71,3 +71,5 @@ npm run dev
   - [x] 카드의 X버튼을 누르면 커스텀 알럿창을 표시한다.
   - [x] 취소 버튼을 누르면 알럿창이 닫히고,
   - [x] 삭제 버튼을 누르면 알럿창이 닫히면서 해당 카드가 삭제된다.
+
+![todo](https://user-images.githubusercontent.com/52727782/179392220-1c65af19-a44f-40fa-825e-bdd353b254d1.gif)
