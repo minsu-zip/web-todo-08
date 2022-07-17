@@ -14,7 +14,7 @@ export default function HistorySidebar({ $target }) {
 
   const init = () => {
     getHistory().then((data) => {
-      this.setState(data)
+      this.setState(data.reverse())
     })
   }
   init()

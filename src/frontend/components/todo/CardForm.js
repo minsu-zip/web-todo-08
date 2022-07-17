@@ -1,4 +1,5 @@
 import TodoAPI from '../../api/todo'
+import { postHistory } from '../../api/history'
 
 export default function TodoCardForm({ $target, initialState, todoAction }) {
   this.$element = document.createElement('form')
@@ -95,6 +96,8 @@ export default function TodoCardForm({ $target, initialState, todoAction }) {
     }
     if (this.formActionType === 'create') {
       TodoAPI.post(body, todoAction)
+      const data = { title: `${body.status}에 ${body.title}을 등록하였습니다.` }
+      postHistory(data)
     }
   }
 

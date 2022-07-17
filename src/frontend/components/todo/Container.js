@@ -245,7 +245,7 @@ export default function TodoContainer({ $target }) {
   }
 
   const handleMouseUp = () => {
-    prevCard = targetLi.previousSibling
+    prevCard = targetLi?.previousSibling
     // 선택한 카드와 선택한 카드 상위 카드 or 컴포넌트가 있는 경우
     if (targetLi && prevCard.getAttribute('data-name')) {
       // 선택한 카드 정보
