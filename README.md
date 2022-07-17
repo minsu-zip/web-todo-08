@@ -72,4 +72,5 @@ npm run dev
   - [x] 취소 버튼을 누르면 알럿창이 닫히고,
   - [x] 삭제 버튼을 누르면 알럿창이 닫히면서 해당 카드가 삭제된다.
 
-![todo](https://user-images.githubusercontent.com/52727782/179392220-1c65af19-a44f-40fa-825e-bdd353b254d1.gif)
+![22](https://user-images.githubusercontent.com/52727782/179392597-4e6a536f-38b0-4983-8bc8-cc4deff06004.gif)
+
