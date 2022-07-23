@@ -74,4 +74,5 @@ npm run dev
 
 ![todo](https://user-images.githubusercontent.com/52727782/179409878-2e6ee303-443d-4f5d-8b53-62d4fdef194b.gif)
 
-
+### (추천사항) 본인만의 boilerplate를 만들어서 개인 계정의 github에 올리기
+[박민수](https://github.com/minsu-zip/VanillaJS-boilerplate)
